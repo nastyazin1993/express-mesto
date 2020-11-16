@@ -1,8 +1,8 @@
 {
   "name": "project",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Проект представляет собой интерактивную страницу,куда можно добавлять фотографии, удалять их и ставить лайки.",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
@@ -12,12 +12,14 @@
   "license": "ISC",
   "dependencies": {
     "deploy": "^1.0.3",
-    "eslint-config-airbnb-base": "^14.2.1",
+
     "eslint-plugin-import": "^2.22.1",
     "express": "^4.17.1"
   },
   "devDependencies": {
     "eslint": "^7.13.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-react": "^7.21.5",
     "nodemon": "^2.0.6"
   }
 }

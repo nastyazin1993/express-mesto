@@ -6,10 +6,10 @@ const userRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 
 app.use(express.static(path.join(__dirname, 'public')))
-app.use('/', userRouter)
-app.use('/', cardsRouter)
+app.use('/users', userRouter)
+app.use('/cards', cardsRouter)
 app.use('*', (res, req)=>{
-  req.status(404).send({ "message": "Запрашиваемый ресурс не найден" })
+  req.status(500).send({ "message": "Запрашиваемый ресурс не найден" })
 })
 
 app.listen(PORT, () => {
