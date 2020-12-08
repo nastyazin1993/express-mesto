@@ -7,7 +7,7 @@ const createCard = (req, res) => {
     .then((card) => {
       res.send({ data: card });
     })
-    .catch((err) => res.status(400).send({ err, message: 'Переданы некорректные данные' }));
+    .catch(() => res.status(400).send({ message: 'Переданы некорректные данные' }));
 };
 const getCards = (req, res) => {
   Card.find()
@@ -19,8 +19,14 @@ const getCards = (req, res) => {
 
 const deleteCard = (req, res) => {
   Card.findByIdAndRemove(req.params.id)
-    .then((card) => res.send({ data: card }))
-    .catch(() => res.status(500).send({ message: 'Произошла ошибка' }));
+    .then((card) => {
+      if (!card) {
+        res.status(404).send({ message: 'Нет карточки с таким id' });
+        return;
+      }
+      res.send({ data: card });
+    })
+    .catch(() => res.status(400).send({ message: 'Переданы некорректные данные' }));
 };
 
 const addLikeCard = (req, res) => {
@@ -30,6 +36,10 @@ const addLikeCard = (req, res) => {
     { new: true },
   )
     .then((card) => {
+      if (!card) {
+        res.status(404).send({ message: 'Нет карточки с таким id' });
+        return;
+      }
       res.send({ data: card });
     })
     .catch(() => {
@@ -44,6 +54,10 @@ const removeLikeCard = (req, res) => {
     { new: true },
   )
     .then((card) => {
+      if (!card) {
+        res.status(404).send({ message: 'Нет карточки с таким id' });
+        return;
+      }
       res.send({ data: card });
     })
     .catch(() => {

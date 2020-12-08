@@ -1,4 +1,3 @@
-/* eslint-disable consistent-return */
 const User = require('../models/user');
 
 const getUsers = (req, res) => {
@@ -15,7 +14,8 @@ const getUser = (req, res) => {
   User.findById(id)
     .then((user) => {
       if (!user) {
-        return res.status(404).send({ message: 'Нет пользователя с таким id' });
+        res.status(404).send({ message: 'Нет пользователя с таким id' });
+        return;
       }
       res.send(user);
     })
@@ -38,7 +38,6 @@ const updateProfile = (req, res) => {
     {
       new: true,
       runValidators: true,
-      upsert: true,
     },
   )
     .then((user) => res.send({ data: user }))
@@ -53,7 +52,6 @@ const updateAvatar = (req, res) => {
     {
       new: true,
       runValidators: true,
-      upsert: true,
     },
   )
     .then((user) => res.send({ data: user }))
