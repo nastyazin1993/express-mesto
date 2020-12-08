@@ -1,31 +1,12 @@
 const router = require('express').Router();
-const path = require('path');
-const readFile = require('../utils/read-file');
+const {
+  getUsers, getUser, createUser, updateProfile, updateAvatar,
+} = require('../controllers/users');
 
-const users = path.join(__dirname, '..', 'data', 'user.json');
-
-router.get('/', (req, res) => {
-  readFile(users)
-    .then((data) => res.send(data))
-    .catch(() => {
-      res.status(404).send({ message: 'Запрашиваемый ресурс не найден' });
-    });
-});
-
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
-  readFile(users)
-    .then((data) => {
-      const user = data.find((item) => item._id === id);
-      if (!user) {
-        return res.status(404).send({ message: 'Нет пользователя с таким id' });
-      }
-      res.send(user);
-      return data;
-    })
-    .catch(() => {
-      res.status(404).send({ message: 'Нет пользователя с таким id' });
-    });
-});
+router.get('/', getUsers);
+router.get('/:id', getUser);
+router.post('/', createUser);
+router.patch('/me', updateProfile);
+router.patch('/me/avatar', updateAvatar);
 
 module.exports = router;
